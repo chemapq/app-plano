@@ -1,0 +1,318 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+
+<Layout title="Plano 3D">
+    <main>
+        <div class="tabs">
+            <button class="tab-button" onclick="window.location.href='/'">Planta Baja</button>
+            <button class="tab-button selected">Planta Sótano</button>
+        </div>
+        <section>
+			<div class='imageWrapper3D'>
+				<!-- fill with SVG areas -->
+				<svg viewBox="0 0 720 552" class='image-area image-area--orange-1'>
+					<g class="secondrow room3" ><path d="M 39.659 5.238 L 189.008 4.125 L 189.008 57.674 L 502.295 56.735 L 507.604 134.054 L 684.592 132.324 L 713.794 411.236 L 464.151 412.8 L 469.626 519.19 L 439.703 545.072 L 3.318 548.474 Z" />
+					<g class="toprow room1" ><path d="M 86.847 230.791 L 316.415 227.747 L 319.03 545.726 L 74.044 547.492 Z" />
+					</g>
+					<g class="toprow room2" ><path d="M 213.385 57.892 L 323.819 57.238 L 327.086 174.859 L 189.208 176.166 L 189.861 121.276 L 212.078 119.969 Z" />
+					</g>
+					</g>
+					<text x="250" y="150" class="svg-text">+</text>
+					<text x="180" y="410" class="svg-text">+</text>
+					<text x="250" y="150" class="svg-number">1</text>
+					<text x="180" y="410" class="svg-number">2</text>
+					
+					<img src="/sotano.webp"/>
+					
+			</svg>
+				<!-- -->
+				
+				
+			  </div>
+
+			  <aside class="mobile-text">
+				<ul class="mobile-text-list">
+					<li class="room2">1. Lavandería <span>Ver Imagen</span></li>
+					<li class="texto-3d-impar room1">2. Bodega <span>Ver Imagen</span></li>
+				</ul>
+			</aside>
+			
+        </section>
+		
+		<div>
+			<dialog id="modalSotano1" class="modal">
+				<button class="closeButton"> &#9587;</button>
+				<img src="/bodega-2.webp" alt="ficha comercial" class="modalImage">
+			</dialog>
+			<dialog id="modalSotano2" class="modal">
+				<button class="closeButton"> &#9587;</button>
+				<img src="/lavanderia.webp" alt="ficha comercial" class="modalImage">
+			</dialog>
+			
+			
+		  </div>
+		  
+    </main>
+</Layout>
+
+<script type="module">
+	//Make all modal open with their corresponding button
+
+	document.querySelectorAll(".room1").forEach(room=>room.addEventListener("click",()=>{
+	document.getElementById("modalSotano1").showModal()
+}))
+document.querySelectorAll(".room2").forEach(room=>room.addEventListener("click",()=>{
+	document.getElementById("modalSotano2").showModal()
+}))
+
+
+
+// Close all modals when you click on any X button
+
+document.querySelectorAll(".closeButton").forEach((button)=>{
+	button.addEventListener('click',()=>{
+		document.querySelectorAll(".modal").forEach((m)=>m.close())}
+	)
+})
+
+//Close Modal when you click anywhere on the backdrop
+
+
+	document.getElementById("modalSotano1").addEventListener('click', (event)=> {
+		  let rect = document.getElementById("modalSotano1").getBoundingClientRect();
+		  let isInDialogA = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height &&
+		rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
+		  if (!isInDialogA) {
+			document.getElementById("modalSotano1").close();
+		  }
+	});
+	document.getElementById("modalSotano2").addEventListener('click', (event)=> {
+		  let rectB = document.getElementById("modalSotano2").getBoundingClientRect();
+		  let isInDialogB = (rectB.top <= event.clientY && event.clientY <= rectB.top + rectB.height &&
+		rectB.left <= event.clientX && event.clientX <= rectB.left + rectB.width);
+		  if (!isInDialogB) {
+			document.getElementById("modalSotano2").close();
+		  }
+	});
+	</script>
+
+
+<style>
+    body {
+        overflow: hidden;
+    }
+    h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+    .tab-button {
+        padding: 12px 24px;
+        border: none;
+        background-color: hsl(240, 15%, 27%);
+        color: hsl(240, 15%, 97%);
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 4px;
+        margin: 0 8px;
+        transition: background-color 0.3s;
+    }
+    .tab-button.selected {
+        background-color: hsl(230, 100%, 69%);
+    }
+    .tab-button:hover {
+        background-color: hsl(230, 100%, 75%);
+    }
+    section {
+        background-color: hsl(240, 15%, 17%);
+        height: calc(100vh - 130px);
+        margin: 24px;
+        border-radius: 13px;
+        background-position: 50% 70%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .imageWrapper3D {
+        position: relative;
+        height: 100%;
+        max-height: 100%;
+        aspect-ratio: 720 / 552;
+    }
+    .imageWrapper3D img {
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        aspect-ratio: 720 / 552;
+    }
+    .image-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .toprow {
+        fill: #75A93A;
+        cursor: pointer;
+        stroke: white;
+        stroke-width: 2.5;
+        z-index: 9;
+        fill-opacity: 0;
+    }
+    .secondrow {
+        fill: #75A93A;
+        stroke: white;
+        stroke-width: 3;
+        fill-opacity: 0.4;
+        cursor: pointer;
+    }
+    .toprow:hover {
+        fill-opacity: 0.4;
+    }
+    .secondrow:hover {
+        fill-opacity: 0.6;
+    }
+    dialog {
+        height: calc(100vh - 16px);
+        border: none;
+    }
+    dialog::backdrop {
+        background-color: #26263399;
+    }
+    .outline {
+        fill: none;
+        stroke: white;
+        stroke-width: .2;
+    }
+    .svg-text {
+        fill: #a93a75;
+        font: bold 3rem "Poppins", sans-serif;
+        pointer-events: none;
+        display: block;
+    }
+    .svg-number {
+        display: none;
+        fill: #a93a75;
+        font: bold 3rem "Poppins", sans-serif;
+        z-index: 9;
+    }
+    .modal {
+        width: fit-content;
+        height: fit-content;
+        border-radius: 12px;
+        overflow: hidden;
+        outline: none;
+    }
+    .modalImage {
+        border-radius: 8px;
+        max-width: 80vw;
+        max-height: 80vh;
+    }
+    .layama {
+        width: auto;
+        height: 80vh;
+        aspect-ratio: auto;
+        max-width: 80vw;
+    }
+    .closeButton {
+        position: fixed;
+        top: 8px;
+        right: 8px;
+        height: 48px;
+        width: 48px;
+        outline: none;
+        background-color: hsl(240, 15%, 27%);
+        color: hsl(240, 15%, 97%);
+        cursor: pointer;
+        font-size: 16pt;
+        border: 2px hsl(240, 15%, 27%) solid;
+        border-radius: 250px;
+        text-align: center;
+    }
+    main {
+        height: calc(100dvh - 18px);
+        overflow: hidden;
+    }
+    ul {
+        list-style-type: none;
+        width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .mobile-text {
+        color: white;
+        display: none;
+        width: 100%;
+    }
+    .mobile-text li {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-inline: 8px;
+    }
+    .mobile-text span {
+        cursor: pointer;
+    }
+    .texto-3d-impar {
+        background-color: hsl(240, 15%, 37%);
+    }
+    @media (orientation: portrait) {
+        .svg-number {
+            display: block;
+            pointer-events: none;
+        }
+        .layama {
+            border-radius: 12px;
+            border: solid 8px white;
+            max-width: 90vw;
+        }
+        .svg-text {
+            display: none;
+        }
+        .mobile-text {
+            display: flex;
+        }
+        section {
+            height: auto;
+            width: 100%;
+            margin: 0;
+        }
+        .modal {
+            padding: 0;
+            max-height: calc(100vh - 80px);
+            background-color: transparent;
+        }
+        .modalImage {
+            margin: 0;
+        }
+        .mobile-text-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+            margin-bottom: 40px;
+        }
+        .mobile-text-list li {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-inline: 8px;
+        }
+        main {
+            height: calc(100dvh - 80px);
+            overflow: scroll;
+        }
+    }
+</style>
